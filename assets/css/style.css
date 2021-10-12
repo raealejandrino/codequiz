@@ -3,3 +3,22 @@ header {
     justify-content: space-between;
     margin: 30px 5%;
 }
+
+
+
+.quizSection {
+    margin: 10px auto;
+    height: 15%;
+    width: 45%;
+    display: flex;
+    justify-content: center;
+}
+
+.quizQuestion {
+    width: 100%;
+}
+
+.question {
+    text-align: left;
+    font-size: 30px;
+}
