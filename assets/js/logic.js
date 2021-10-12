@@ -4,9 +4,14 @@ var mainQuizSection = document.querySelector(".quizSection");
 
 var deleteStartBtn = function() {
     startButtonEl.remove();
+    
     console.log("Success");
+    var randomId = randomNumber();
+    console.log(randomId);
     spawnQuestion();
     spawnAnswer();
+
+    
 }
 
 var questionA = {
@@ -17,13 +22,41 @@ var questionA = {
     answer4: "D"
 };
 
+
+var questionB = {
+    question: "Insert question here!!",
+    answer1: "E",
+    answer2: "F",
+    answer3: "G",
+    answer4: "H"
+};
+
+var questionC = {
+    question: "Insert question here##",
+    answer1: "I",
+    answer2: "J",
+    answer3: "K",
+    answer4: "L"
+};
+
+var questionsArray = [questionA, questionB, questionC];
+
+// function to generate a random numeric value
+
+var randomNumber = function() {
+    var value = Math.floor(Math.random() * questionsArray.length);
+    return value
+};
+
+
 // create question with next button
 
 var spawnQuestion = function() {
+    console.log(questionsArray);
     // create, fill in content, append
     var questionContainerEl = document.createElement("div");
     questionContainerEl.className = "quizQuestion";
-    questionContainerEl.innerHTML = "<h1 class='question'>" + questionA.question + "</h1>";
+    questionContainerEl.innerHTML = "<h1 class='question'>" + questionsArray[randomId].question + "</h1>";
     mainQuizSection.appendChild(questionContainerEl);
 
    
@@ -59,7 +92,21 @@ var spawnAnswer = function() {
 
     mainQuizSection.appendChild(answerContainerEl);
 
-
+    answerOne.addEventListener("click", deleteCurrentQuestion);
+    answerTwo.addEventListener("click", deleteCurrentQuestion);
+    answerThree.addEventListener("click", deleteCurrentQuestion);
+    answerFour.addEventListener("click", deleteCurrentQuestion);
 }
+
+var deleteCurrentQuestion = function() {
+    var currentQuestion = document.querySelector(".quizQuestion");
+    var currentAnswer = document.querySelector (".quizAnswer");
+    currentQuestion.remove();
+    currentAnswer.remove();
+    spawnQuestion();
+    spawnAnswer();
+}
+
+
 
 startButtonEl.addEventListener('click', deleteStartBtn);
