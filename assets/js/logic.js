@@ -31,11 +31,19 @@ var questionC = {
 
 var questionsArray = [questionA, questionB, questionC];
 
+
+var randomNumber = function() {
+    var value = Math.floor(Math.random() * questionsArray.length);
+    return value
+};
+
+var randomId = randomNumber();
+
 var deleteStartBtn = function() {
     startButtonEl.remove();
     
     console.log("Success");
-    var randomId = randomNumber();
+    
     console.log(randomId);
     spawnQuestion(randomId);
     spawnAnswer(randomId);
@@ -43,13 +51,6 @@ var deleteStartBtn = function() {
 
     
 }
-
-// function to generate a random numeric value
-
-var randomNumber = function() {
-    var value = Math.floor(Math.random() * questionsArray.length);
-    return value
-};
 
 
 // create question with next button
@@ -69,7 +70,7 @@ var spawnQuestion = function(randomId) {
 
 }
 
-var spawnAnswer = function(randomId) {
+var spawnAnswer = function() {
     var answerContainerEl = document.createElement("div");
     answerContainerEl.className = "quizAnswer";
 
@@ -97,19 +98,22 @@ var spawnAnswer = function(randomId) {
 
     
 
-    answerOne.addEventListener("click", deleteCurrentQuestion(randomId));
-    // answerTwo.addEventListener("click", deleteCurrentQuestion(randomId));
-    // answerThree.addEventListener("click", deleteCurrentQuestion(randomId));
-    // answerFour.addEventListener("click", deleteCurrentQuestion(randomId));
+    answerOne.addEventListener("click", deleteCurrentQuestion);
+    answerTwo.addEventListener("click", deleteCurrentQuestion);
+    answerThree.addEventListener("click", deleteCurrentQuestion);
+    answerFour.addEventListener("click", deleteCurrentQuestion);
 }
 
-var deleteCurrentQuestion = function(randomId) {
+var deleteCurrentQuestion = function() {
+    console.log(randomId);
     var currentQuestion = document.querySelector(".quizQuestion");
     var currentAnswer = document.querySelector (".quizAnswer");
     questionsArray.splice(randomId, 1);
+    console.log(questionsArray);
     var randomId = randomNumber();
     currentQuestion.remove();
     currentAnswer.remove();
+    console.log(randomId);
     spawnQuestion(randomId);
     spawnAnswer(randomId);
 }
