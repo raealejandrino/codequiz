@@ -2,17 +2,7 @@ var startButtonEl = document.querySelector(".startBtn");
 var mainQuizSection = document.querySelector(".quizSection");
 
 
-var deleteStartBtn = function() {
-    startButtonEl.remove();
-    
-    console.log("Success");
-    var randomId = randomNumber();
-    console.log(randomId);
-    spawnQuestion();
-    spawnAnswer();
 
-    
-}
 
 var questionA = {
     question: "Insert question here?",
@@ -41,6 +31,19 @@ var questionC = {
 
 var questionsArray = [questionA, questionB, questionC];
 
+var deleteStartBtn = function() {
+    startButtonEl.remove();
+    
+    console.log("Success");
+    var randomId = randomNumber();
+    console.log(randomId);
+    spawnQuestion(randomId);
+    spawnAnswer(randomId);
+    
+
+    
+}
+
 // function to generate a random numeric value
 
 var randomNumber = function() {
@@ -51,7 +54,7 @@ var randomNumber = function() {
 
 // create question with next button
 
-var spawnQuestion = function() {
+var spawnQuestion = function(randomId) {
     console.log(questionsArray);
     // create, fill in content, append
     var questionContainerEl = document.createElement("div");
@@ -66,7 +69,7 @@ var spawnQuestion = function() {
 
 }
 
-var spawnAnswer = function() {
+var spawnAnswer = function(randomId) {
     var answerContainerEl = document.createElement("div");
     answerContainerEl.className = "quizAnswer";
 
@@ -92,21 +95,27 @@ var spawnAnswer = function() {
 
     mainQuizSection.appendChild(answerContainerEl);
 
-    answerOne.addEventListener("click", deleteCurrentQuestion);
-    answerTwo.addEventListener("click", deleteCurrentQuestion);
-    answerThree.addEventListener("click", deleteCurrentQuestion);
-    answerFour.addEventListener("click", deleteCurrentQuestion);
+    
+
+    answerOne.addEventListener("click", deleteCurrentQuestion(randomId));
+    // answerTwo.addEventListener("click", deleteCurrentQuestion(randomId));
+    // answerThree.addEventListener("click", deleteCurrentQuestion(randomId));
+    // answerFour.addEventListener("click", deleteCurrentQuestion(randomId));
 }
 
-var deleteCurrentQuestion = function() {
+var deleteCurrentQuestion = function(randomId) {
     var currentQuestion = document.querySelector(".quizQuestion");
     var currentAnswer = document.querySelector (".quizAnswer");
+    questionsArray.splice(randomId, 1);
+    var randomId = randomNumber();
     currentQuestion.remove();
     currentAnswer.remove();
-    spawnQuestion();
-    spawnAnswer();
+    spawnQuestion(randomId);
+    spawnAnswer(randomId);
 }
 
 
 
 startButtonEl.addEventListener('click', deleteStartBtn);
+
+    
