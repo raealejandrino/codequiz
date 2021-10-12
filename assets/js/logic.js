@@ -227,7 +227,7 @@ var endGame = function() {
     mainQuizSection.appendChild(finishLine);
 
     var submissionButton = document.querySelector("#save-initial");
-    submissionButton.addEventListener('submit', saveSubmission);
+    submissionButton.addEventListener('click', saveSubmission);
 }
 
 var saveSubmission = function(event) {
@@ -264,7 +264,21 @@ var toStorage = function(object) {
 // to localStorage
 
 var finalSave = function() {
-    localStorage.setItem("scores", JSON.stringify(arrStor));
+    var retrievedScores = localStorage.getItem("scores");
+    console.log(arrStor);
+    if (!retrievedScores) {
+        localStorage.setItem("scores", JSON.stringify(arrStor));
+        return false;
+    }
+    console.log(arrStor);
+
+    retrievedScores = JSON.parse(retrievedScores);
+    console.log(retrievedScores);
+    var newScorArr = retrievedScores.concat(arrStor);
+    console.log(newScorArr);
+
+    console.log(retrievedScores);
+    localStorage.setItem("scores", JSON.stringify(newScorArr));
 };
 
 
