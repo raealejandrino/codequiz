@@ -39,3 +39,11 @@ header {
 .quizAnswer button {
     margin: 4px;
 }
+
+.initialSub {
+    display: flex;
+}
+
+.initialSub input, .initialSub button {
+    margin: 20px 10px;
+}

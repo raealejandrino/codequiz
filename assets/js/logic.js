@@ -50,6 +50,19 @@ var timer = 75;
 var randomId = randomNumber();
 
 var deleteStartBtn = function() {
+     // TIMER FUNCTION
+     var countdown = function() {
+        var timerNum = document.querySelector(".timer");
+        timerNum.innerHTML = timer;
+        timer--;
+            if(timer === 0 || questionsArray.length < 1) {
+                console.log("end");
+                clearInterval(startCountdown);
+                endGame();
+        
+            };
+    };
+
     var startCountdown = setInterval(countdown, 1000);
     startButtonEl.remove();
     
@@ -60,21 +73,13 @@ var deleteStartBtn = function() {
     spawnQuestion(randomId);
     spawnAnswer(randomId);
     
+  
+    
 
     
 }
 
-// TIMER FUNCTION
 
-var countdown = function() {
-    var timerNum = document.querySelector(".timer");
-    timerNum.innerHTML = timer;
-    timer--;
-        if(timer === 0) {
-            console.log("end");
-            clearInterval(startCountdown);
-        };
-};
 
 
 
@@ -164,6 +169,8 @@ var deleteCurrentQuestion = function(event) {
         timer -= 5;
     }
 
+    
+
 
 
     console.log(targetEl);
@@ -171,6 +178,16 @@ var deleteCurrentQuestion = function(event) {
     // console.log(randomId);
     var currentQuestion = document.querySelector(".quizQuestion");
     var currentAnswer = document.querySelector (".quizAnswer");
+
+    if (questionsArray.length < 1) {
+        
+        currentQuestion.remove();
+        currentAnswer.remove();
+        endGame();
+        
+    }
+
+
     questionsArray.splice(randomId, 1);
     // console.log(questionsArray);
     var randomId = randomNumber();
@@ -179,6 +196,30 @@ var deleteCurrentQuestion = function(event) {
     console.log(randomId);
     spawnQuestion(randomId);
     spawnAnswer(randomId);
+}
+
+// endgame creation function
+
+var endGame = function() {
+    var finishLine = document.createElement("div");
+    finishLine.className = "Finish";
+
+    var allDone = document.createElement("h1");
+    allDone.className = "question";
+    allDone.innerHTML = "All Done!";
+    finishLine.appendChild(allDone);
+
+    var finalScoreStatement = document.createElement("h3");
+    finalScoreStatement.className = "scoreStatement";
+    finalScoreStatement.innerHTML = "Your final score is " + timer + " .";
+    finishLine.appendChild(finalScoreStatement);
+
+    var initialSubmission = document.createElement("div");
+    initialSubmission.className = "initialSub";
+    initialSubmission.innerHTML = "<h3>Enter initials:</h3><input type='text' name='initials' /><button id='save-initial'>Submit</button>";
+    finishLine.appendChild(initialSubmission);
+
+    mainQuizSection.appendChild(finishLine);
 }
 
 
