@@ -106,24 +106,39 @@ var spawnAnswer = function(randomId) {
     answerContainerEl.className = "quizAnswer";
 
     var answerOne = document.createElement("button");
-    answerOne.className = "answerButton";
+    answerOne.className = "answerButton1";
     answerOne.innerHTML = questionsArray[randomId].answer1;
     answerContainerEl.appendChild(answerOne);
 
     var answerTwo = document.createElement("button");
-    answerTwo.className = "answerButton";
+    answerTwo.className = "answerButton2";
     answerTwo.innerHTML = questionsArray[randomId].answer2;
     answerContainerEl.appendChild(answerTwo);
 
     var answerThree = document.createElement("button");
-    answerThree.className = "answerButton";
+    answerThree.className = "answerButton3";
     answerThree.innerHTML = questionsArray[randomId].answer3;
     answerContainerEl.appendChild(answerThree);
 
     var answerFour = document.createElement("button");
-    answerFour.className = "answerButton";
+    answerFour.className = "answerButton4";
     answerFour.innerHTML = questionsArray[randomId].answer4;
     answerContainerEl.appendChild(answerFour);
+
+    console.log(questionsArray[randomId].question);
+
+    if (questionsArray[randomId].question === questionA.question ) {
+        answerOne.setAttribute("data-special-answer", 5);
+    } 
+    else if (questionsArray[randomId].question === questionB.question) {
+        answerTwo.setAttribute("data-special-answer", 5);
+    }
+    else if (questionsArray[randomId].question === questionC.question) {
+        answerThree.setAttribute("data-special-answer", 5);
+    }
+    else  {
+        answerFour.setAttribute("data-special-answer", 5);
+    }
 
     mainQuizSection.appendChild(answerContainerEl);
 
@@ -135,19 +150,29 @@ var spawnAnswer = function(randomId) {
     answerFour.addEventListener("click", deleteCurrentQuestion);
 }
 
-var deleteCurrentQuestion = function() {
+var deleteCurrentQuestion = function(event) {
     var randomId = randomNumber();
     var questionContainerEl = document.querySelector(".quizQuestion");
     console.log(randomId);
     if (randomId !== questionContainerEl.getAttribute("data-question-id")) {
         randomId = questionContainerEl.getAttribute("data-question-id")
     }
-    console.log(questionContainerEl.getAttribute("data-question-id"));
-    console.log(randomId);
+
+    var targetEl = event.target;
+
+    if (!targetEl.hasAttribute("data-special-answer")) {
+        timer -= 5;
+    }
+
+
+
+    console.log(targetEl);
+    // console.log(questionContainerEl.getAttribute("data-question-id"));
+    // console.log(randomId);
     var currentQuestion = document.querySelector(".quizQuestion");
     var currentAnswer = document.querySelector (".quizAnswer");
     questionsArray.splice(randomId, 1);
-    console.log(questionsArray);
+    // console.log(questionsArray);
     var randomId = randomNumber();
     currentQuestion.remove();
     currentAnswer.remove();
