@@ -12,13 +12,30 @@ header {
     width: 45%;
     display: flex;
     justify-content: center;
+    flex-direction: column;
+}
+
+.startBtn {
+    width: 20%;
+    margin: 0 auto;
 }
 
 .quizQuestion {
     width: 100%;
+    margin: 0px auto 30px auto;
 }
 
 .question {
     text-align: left;
     font-size: 30px;
+}
+
+.quizAnswer {
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+}
+
+.answerButton {
+    margin: 4px;
 }
