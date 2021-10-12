@@ -1,7 +1,7 @@
 var startButtonEl = document.querySelector(".startBtn");
 var mainQuizSection = document.querySelector(".quizSection");
 
-
+var arrStor = [];
 
 
 var questionA = {
@@ -187,8 +187,9 @@ var deleteCurrentQuestion = function(event) {
         
     }
 
-
-    questionsArray.splice(randomId, 1);
+    if (questionsArray.length > 0) {
+        
+        questionsArray.splice(randomId, 1);
     // console.log(questionsArray);
     var randomId = randomNumber();
     currentQuestion.remove();
@@ -196,7 +197,10 @@ var deleteCurrentQuestion = function(event) {
     console.log(randomId);
     spawnQuestion(randomId);
     spawnAnswer(randomId);
+        
+    }
 }
+    
 
 // endgame creation function
 
@@ -218,9 +222,50 @@ var endGame = function() {
     initialSubmission.className = "initialSub";
     initialSubmission.innerHTML = "<h3>Enter initials:</h3><input type='text' name='initials' /><button id='save-initial'>Submit</button>";
     finishLine.appendChild(initialSubmission);
+    
 
     mainQuizSection.appendChild(finishLine);
+
+    var submissionButton = document.querySelector("#save-initial");
+    submissionButton.addEventListener('submit', saveSubmission);
 }
+
+var saveSubmission = function(event) {
+
+    event.preventDefault();
+
+    var initialInput = document.querySelector("input[name='initials']").value;
+    console.log(initialInput);
+    console.log("saved!");
+
+    // check if input values are empty strings
+
+    if (!initialInput) {
+        alert("You need to fill out your initials!");
+        return false;
+    }
+
+    var inputObj = {
+        name: initialInput,
+        score: timer
+    };
+
+    toStorage(inputObj);
+}
+
+// push into array and save to storage
+
+var toStorage = function(object) {
+    arrStor.push(object);
+
+    finalSave();
+};
+
+// to localStorage
+
+var finalSave = function() {
+    localStorage.setItem("scores", JSON.stringify(arrStor));
+};
 
 
 
