@@ -61,6 +61,7 @@ var spawnQuestion = function(randomId) {
     var questionContainerEl = document.createElement("div");
     questionContainerEl.className = "quizQuestion";
     questionContainerEl.innerHTML = "<h1 class='question'>" + questionsArray[randomId].question + "</h1>";
+    questionContainerEl.setAttribute("data-question-id", randomId);
     mainQuizSection.appendChild(questionContainerEl);
 
    
@@ -70,28 +71,28 @@ var spawnQuestion = function(randomId) {
 
 }
 
-var spawnAnswer = function() {
+var spawnAnswer = function(randomId) {
     var answerContainerEl = document.createElement("div");
     answerContainerEl.className = "quizAnswer";
 
     var answerOne = document.createElement("button");
     answerOne.className = "answerButton";
-    answerOne.innerHTML = questionA.answer1;
+    answerOne.innerHTML = questionsArray[randomId].answer1;
     answerContainerEl.appendChild(answerOne);
 
     var answerTwo = document.createElement("button");
     answerTwo.className = "answerButton";
-    answerTwo.innerHTML = questionA.answer2;
+    answerTwo.innerHTML = questionsArray[randomId].answer2;
     answerContainerEl.appendChild(answerTwo);
 
     var answerThree = document.createElement("button");
     answerThree.className = "answerButton";
-    answerThree.innerHTML = questionA.answer3;
+    answerThree.innerHTML = questionsArray[randomId].answer3;
     answerContainerEl.appendChild(answerThree);
 
     var answerFour = document.createElement("button");
     answerFour.className = "answerButton";
-    answerFour.innerHTML = questionA.answer4;
+    answerFour.innerHTML = questionsArray[randomId].answer4;
     answerContainerEl.appendChild(answerFour);
 
     mainQuizSection.appendChild(answerContainerEl);
@@ -105,6 +106,13 @@ var spawnAnswer = function() {
 }
 
 var deleteCurrentQuestion = function() {
+    var randomId = randomNumber();
+    var questionContainerEl = document.querySelector(".quizQuestion");
+    console.log(randomId);
+    if (randomId !== questionContainerEl.getAttribute("data-question-id")) {
+        randomId = questionContainerEl.getAttribute("data-question-id")
+    }
+    console.log(questionContainerEl.getAttribute("data-question-id"));
     console.log(randomId);
     var currentQuestion = document.querySelector(".quizQuestion");
     var currentAnswer = document.querySelector (".quizAnswer");
