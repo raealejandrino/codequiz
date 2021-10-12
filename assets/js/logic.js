@@ -29,7 +29,15 @@ var questionC = {
     answer4: "L"
 };
 
-var questionsArray = [questionA, questionB, questionC];
+var questionD = {
+    question: "Insert question here**",
+    answer1: "M",
+    answer2: "N",
+    answer3: "O",
+    answer4: "P"
+};
+
+var questionsArray = [questionA, questionB, questionC, questionD];
 
 
 var randomNumber = function() {
@@ -37,20 +45,42 @@ var randomNumber = function() {
     return value
 };
 
+var timer = 75;
+
 var randomId = randomNumber();
 
 var deleteStartBtn = function() {
+    var startCountdown = setInterval(countdown, 1000);
     startButtonEl.remove();
     
     console.log("Success");
     
     console.log(randomId);
+    
     spawnQuestion(randomId);
     spawnAnswer(randomId);
     
 
     
 }
+
+// TIMER FUNCTION
+
+var countdown = function() {
+    var timerNum = document.querySelector(".timer");
+    timerNum.innerHTML = timer;
+    timer--;
+        if(timer === 0) {
+            console.log("end");
+            clearInterval(startCountdown);
+        };
+};
+
+
+
+
+
+
 
 
 // create question with next button
