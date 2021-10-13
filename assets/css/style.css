@@ -15,6 +15,15 @@ header {
     flex-direction: column;
 }
 
+.quizCheck {
+    margin: 10px auto;
+    height: 15%;
+    width: 45%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
 .startBtn {
     width: 20%;
     margin: 0 auto;

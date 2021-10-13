@@ -1,40 +1,41 @@
 var startButtonEl = document.querySelector(".startBtn");
 var mainQuizSection = document.querySelector(".quizSection");
+var quizCheckSection = document.querySelector(".quizCheck");
 
 var arrStor = [];
 
 
 var questionA = {
-    question: "Insert question here?",
-    answer1: "A",
-    answer2: "B",
-    answer3: "C",
-    answer4: "D"
+    question: "Commonly used data types DO Not Include:",
+    answer1: "alerts",
+    answer2: "strings",
+    answer3: "numbers",
+    answer4: "booleans"
 };
 
 
 var questionB = {
-    question: "Insert question here!!",
-    answer1: "E",
-    answer2: "F",
-    answer3: "G",
-    answer4: "H"
+    question: "The condition in an if / else statement is enclosed with _____.",
+    answer1: "quotes",
+    answer2: "parenthesis",
+    answer3: "curly brackets",
+    answer4: "square brackets"
 };
 
 var questionC = {
-    question: "Insert question here##",
-    answer1: "I",
-    answer2: "J",
-    answer3: "K",
-    answer4: "L"
+    question: "String values must be enclosed within _____ when being assinged to variables.",
+    answer1: "commas",
+    answer2: "curly brackets",
+    answer3: "quotes",
+    answer4: "parenthesis"
 };
 
 var questionD = {
-    question: "Insert question here**",
-    answer1: "M",
-    answer2: "N",
-    answer3: "O",
-    answer4: "P"
+    question: "Arrays in JavaScript can be used to store _____.",
+    answer1: "numbers and strings",
+    answer2: "other arrays",
+    answer3: "booleans",
+    answer4: "all of the above"
 };
 
 var questionsArray = [questionA, questionB, questionC, questionD];
@@ -101,8 +102,10 @@ var spawnQuestion = function(randomId) {
 
    
 
-    var quizCheckerEl = document.createElement("div");
-    quizCheckerEl.className = "quizChecker";
+    // var quizCheckerEl = document.createElement("div");
+    // quizCheckerEl.className = "quizChecker";
+    // quizCheckSection.appendChild(quizCheckerEl);
+
 
 }
 
@@ -167,6 +170,11 @@ var deleteCurrentQuestion = function(event) {
 
     if (!targetEl.hasAttribute("data-special-answer")) {
         timer -= 5;
+        quizCheckSection.innerHTML = "<h2>Wrong!</h2>";
+
+    }
+    else {
+        quizCheckSection.innerHTML = "<h2>Correct!</h2>";
     }
 
     
@@ -183,6 +191,7 @@ var deleteCurrentQuestion = function(event) {
         
         currentQuestion.remove();
         currentAnswer.remove();
+        
         endGame();
         
     }
@@ -194,6 +203,7 @@ var deleteCurrentQuestion = function(event) {
     var randomId = randomNumber();
     currentQuestion.remove();
     currentAnswer.remove();
+    
     console.log(randomId);
     spawnQuestion(randomId);
     spawnAnswer(randomId);
@@ -205,6 +215,7 @@ var deleteCurrentQuestion = function(event) {
 // endgame creation function
 
 var endGame = function() {
+    quizCheckSection.remove();
     var finishLine = document.createElement("div");
     finishLine.className = "Finish";
 
