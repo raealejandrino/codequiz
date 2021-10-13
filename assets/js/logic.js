@@ -50,7 +50,7 @@ var questionD = {
 var questionsArray = [questionA, questionB, questionC, questionD];
 
 // Quiz timer global variable 
-var timer = 5;
+var timer = 60;
 
 // Random number function (used to determine random quiz question)
 var randomNumber = function() {
@@ -243,7 +243,7 @@ var endGame = function() {
             quizAnswer.remove();
         }
     
-    // Check to ensure timer is not -1
+    // Check to ensure score is not -1
     if (timer < 0) {
         timer = 0;
     }
