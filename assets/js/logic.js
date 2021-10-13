@@ -5,6 +5,7 @@
 var startButtonEl = document.querySelector(".startBtn");
 var startContent = document.querySelector("#startCont");
 var mainQuizSection = document.querySelector(".quizSection");
+var quizCheckSection = document.querySelector(".quizCheck");
 
 
 // Global array variable to store player initials and session score object
@@ -229,11 +230,15 @@ var deleteCurrentQuestion = function(event) {
 
 var endGame = function() {
     // Remove whole quiz elements
+    
     var quizQuestion = document.querySelector(".quizQuestion");
     var quizAnswer = document.querySelector(".quizAnswer");
-    quizQuestion.remove();
-    quizAnswer.remove();
-
+        if (quizQuestion && quizAnswer) {
+            quizQuestion.remove();
+            quizAnswer.remove();
+        }
+    
+    quizCheckSection.remove();
     // Create endgame or submission layout
     var finishLine = document.createElement("div");
     finishLine.className = "Finish";
