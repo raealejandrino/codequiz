@@ -81,6 +81,8 @@ var deleteStartBtn = function() {
                 endGame();
         
             };
+
+            
     };
 
     // Initialize countdown
@@ -187,6 +189,9 @@ var deleteCurrentQuestion = function(event) {
         if (!targetEl.hasAttribute("data-special-answer")) {
             timer -= 5;
             quizCheckSection.innerHTML = "<h2>Wrong!</h2>";
+            if (timer < 0) {
+                timer = 0;
+            }
 
         }
         else {
@@ -237,6 +242,11 @@ var endGame = function() {
             quizQuestion.remove();
             quizAnswer.remove();
         }
+    
+    // Check to ensure timer is not -1
+    if (timer < 0) {
+        timer = 0;
+    }
     
     quizCheckSection.remove();
     // Create endgame or submission layout
