@@ -3,15 +3,15 @@
 // GLOBAL VARIABLES
 
 var startButtonEl = document.querySelector(".startBtn");
+var startContent = document.querySelector("#startCont");
 var mainQuizSection = document.querySelector(".quizSection");
-var quizCheckSection = document.querySelector(".quizCheck");
 
 
-
+// Global array variable to store player initials and session score object
 var arrStor = [];
 
 
-// Quiz question objects
+// Quiz question w/ answer objects
 
 var questionA = {
     question: "Commonly used data types DO Not Include:",
@@ -49,7 +49,7 @@ var questionD = {
 var questionsArray = [questionA, questionB, questionC, questionD];
 
 // Quiz timer global variable 
-var timer = 75;
+var timer = 5;
 
 // Random number function (used to determine random quiz question)
 var randomNumber = function() {
@@ -65,13 +65,14 @@ var randomId = randomNumber();
 // Function to begin quiz when clicking start
 
 var deleteStartBtn = function() {
+
      // TIMER FUNCTION
      var countdown = function() {
-        var timerNum = document.querySelector(".timer");
-
         // Set the timer on the html page to actual timer variable value
+        var timerNum = document.querySelector(".timer");
         timerNum.innerHTML = timer;
         timer--;
+
             if(timer === 0 || questionsArray.length < 1) {
                 clearInterval(startCountdown);
 
@@ -86,27 +87,13 @@ var deleteStartBtn = function() {
 
     // Remove start page elements
     startButtonEl.remove();
+    startContent.remove();
     
-    
-    
-    
+
     // Spawn in quiz question elements
     spawnQuestion(randomId);
     spawnAnswer(randomId);
-    
-  
-    
-
-    
 };
-
-
-
-
-
-
-
-
 
 
 // Function to create randomly selected question 
@@ -155,19 +142,19 @@ var spawnAnswer = function(randomId) {
     answerContainerEl.appendChild(answerFour);
 
    
-    // Hard coding to set which answer in correlation with it's question is the CORRECT answer by setting it's own special data id
-    if (questionsArray[randomId].question === questionA.question ) {
-        answerOne.setAttribute("data-special-answer", 5);
-    } 
-    else if (questionsArray[randomId].question === questionB.question) {
-        answerTwo.setAttribute("data-special-answer", 5);
-    }
-    else if (questionsArray[randomId].question === questionC.question) {
-        answerThree.setAttribute("data-special-answer", 5);
-    }
-    else  {
-        answerFour.setAttribute("data-special-answer", 5);
-    }
+        // Hard coding to set which answer in correlation with it's question is the CORRECT answer by setting it's own special data id
+        if (questionsArray[randomId].question === questionA.question ) {
+            answerOne.setAttribute("data-special-answer", 5);
+        } 
+        else if (questionsArray[randomId].question === questionB.question) {
+            answerTwo.setAttribute("data-special-answer", 5);
+        }
+        else if (questionsArray[randomId].question === questionC.question) {
+            answerThree.setAttribute("data-special-answer", 5);
+        }
+        else  {
+            answerFour.setAttribute("data-special-answer", 5);
+        }
 
     // Add answer container to quiz section
     mainQuizSection.appendChild(answerContainerEl);
@@ -235,14 +222,17 @@ var deleteCurrentQuestion = function(event) {
             spawnAnswer(randomId);
             
         }
-    }
+};
     
 
 // Function to execute once game ends (Either timer hits 0 or no more questions to answer)
 
 var endGame = function() {
     // Remove whole quiz elements
-    quizCheckSection.remove();
+    var quizQuestion = document.querySelector(".quizQuestion");
+    var quizAnswer = document.querySelector(".quizAnswer");
+    quizQuestion.remove();
+    quizAnswer.remove();
 
     // Create endgame or submission layout
     var finishLine = document.createElement("div");
@@ -272,7 +262,7 @@ var endGame = function() {
     // Declare variable on the submit button, and add event listener for click to execute saveSubmission function
     var submissionButton = document.querySelector("#save-initial");
     submissionButton.addEventListener('click', saveSubmission);
-}
+};
 
 
 // Function to execute on submitting initials on endgame screen
@@ -297,7 +287,7 @@ var saveSubmission = function(event) {
     // Get the data to localStorage and redirect to high scores page
     toStorage(inputObj);
     window.location.href = "./secondary.html";
-}
+};
 
 
 // push into array and save to storage

@@ -24,6 +24,16 @@ header {
     flex-direction: column;
 }
 
+.startStyle {
+    text-align:center;
+}
+
+#startCont {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+}
 .startBtn {
     width: 20%;
     margin: 0 auto;
