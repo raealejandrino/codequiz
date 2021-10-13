@@ -1,9 +1,17 @@
+
+
+// GLOBAL VARIABLES
+
 var startButtonEl = document.querySelector(".startBtn");
 var mainQuizSection = document.querySelector(".quizSection");
 var quizCheckSection = document.querySelector(".quizCheck");
 
+
+
 var arrStor = [];
 
+
+// Quiz question objects
 
 var questionA = {
     question: "Commonly used data types DO Not Include:",
@@ -40,37 +48,49 @@ var questionD = {
 
 var questionsArray = [questionA, questionB, questionC, questionD];
 
+// Quiz timer global variable 
+var timer = 75;
 
+// Random number function (used to determine random quiz question)
 var randomNumber = function() {
     var value = Math.floor(Math.random() * questionsArray.length);
     return value
 };
 
-var timer = 75;
 
+// Declare variable for random question selector function
 var randomId = randomNumber();
+
+
+// Function to begin quiz when clicking start
 
 var deleteStartBtn = function() {
      // TIMER FUNCTION
      var countdown = function() {
         var timerNum = document.querySelector(".timer");
+
+        // Set the timer on the html page to actual timer variable value
         timerNum.innerHTML = timer;
         timer--;
             if(timer === 0 || questionsArray.length < 1) {
-                console.log("end");
                 clearInterval(startCountdown);
+
+                // Run endgame function
                 endGame();
         
             };
     };
 
+    // Initialize countdown
     var startCountdown = setInterval(countdown, 1000);
+
+    // Remove start page elements
     startButtonEl.remove();
     
-    console.log("Success");
     
-    console.log(randomId);
     
+    
+    // Spawn in quiz question elements
     spawnQuestion(randomId);
     spawnAnswer(randomId);
     
@@ -78,7 +98,7 @@ var deleteStartBtn = function() {
     
 
     
-}
+};
 
 
 
@@ -89,52 +109,53 @@ var deleteStartBtn = function() {
 
 
 
-// create question with next button
+// Function to create randomly selected question 
 
 var spawnQuestion = function(randomId) {
-    console.log(questionsArray);
-    // create, fill in content, append
+    
+    // Creating question element with special data id
     var questionContainerEl = document.createElement("div");
     questionContainerEl.className = "quizQuestion";
     questionContainerEl.innerHTML = "<h1 class='question'>" + questionsArray[randomId].question + "</h1>";
     questionContainerEl.setAttribute("data-question-id", randomId);
     mainQuizSection.appendChild(questionContainerEl);
 
-   
+};
 
-    // var quizCheckerEl = document.createElement("div");
-    // quizCheckerEl.className = "quizChecker";
-    // quizCheckSection.appendChild(quizCheckerEl);
-
-
-}
+// Function to create corresponding answers
 
 var spawnAnswer = function(randomId) {
+
+    // Creating container to put answer elements in
     var answerContainerEl = document.createElement("div");
     answerContainerEl.className = "quizAnswer";
 
+    // First answer
     var answerOne = document.createElement("button");
     answerOne.className = "answerButton1";
     answerOne.innerHTML = questionsArray[randomId].answer1;
     answerContainerEl.appendChild(answerOne);
 
+    // Second answer
     var answerTwo = document.createElement("button");
     answerTwo.className = "answerButton2";
     answerTwo.innerHTML = questionsArray[randomId].answer2;
     answerContainerEl.appendChild(answerTwo);
 
+    // Third answer
     var answerThree = document.createElement("button");
     answerThree.className = "answerButton3";
     answerThree.innerHTML = questionsArray[randomId].answer3;
     answerContainerEl.appendChild(answerThree);
 
+    // Fourth answer
     var answerFour = document.createElement("button");
     answerFour.className = "answerButton4";
     answerFour.innerHTML = questionsArray[randomId].answer4;
     answerContainerEl.appendChild(answerFour);
 
-    console.log(questionsArray[randomId].question);
-
+   
+    // Hard coding to set which answer in correlation with it's question is the CORRECT answer by setting it's own special data id
     if (questionsArray[randomId].question === questionA.question ) {
         answerOne.setAttribute("data-special-answer", 5);
     } 
@@ -148,122 +169,136 @@ var spawnAnswer = function(randomId) {
         answerFour.setAttribute("data-special-answer", 5);
     }
 
+    // Add answer container to quiz section
     mainQuizSection.appendChild(answerContainerEl);
 
     
-
+    // event listeners to move onto next question on click
     answerOne.addEventListener("click", deleteCurrentQuestion);
     answerTwo.addEventListener("click", deleteCurrentQuestion);
     answerThree.addEventListener("click", deleteCurrentQuestion);
     answerFour.addEventListener("click", deleteCurrentQuestion);
 }
 
+
+
+// Function to remove current question elements and spawn next question
 var deleteCurrentQuestion = function(event) {
     var randomId = randomNumber();
     var questionContainerEl = document.querySelector(".quizQuestion");
-    console.log(randomId);
-    if (randomId !== questionContainerEl.getAttribute("data-question-id")) {
-        randomId = questionContainerEl.getAttribute("data-question-id")
-    }
+    
+        // Matching the randomly generated Id to the current question Id
+        if (randomId !== questionContainerEl.getAttribute("data-question-id")) {
+            randomId = questionContainerEl.getAttribute("data-question-id")
+        }
 
+    // Declare variable on the button that was clicked 
     var targetEl = event.target;
 
-    if (!targetEl.hasAttribute("data-special-answer")) {
-        timer -= 5;
-        quizCheckSection.innerHTML = "<h2>Wrong!</h2>";
+        // Execute code based on right or wrong answer
+        if (!targetEl.hasAttribute("data-special-answer")) {
+            timer -= 5;
+            quizCheckSection.innerHTML = "<h2>Wrong!</h2>";
 
-    }
-    else {
-        quizCheckSection.innerHTML = "<h2>Correct!</h2>";
-    }
+        }
+        else {
+            quizCheckSection.innerHTML = "<h2>Correct!</h2>";
+        }
 
     
 
-
-
-    console.log(targetEl);
-    // console.log(questionContainerEl.getAttribute("data-question-id"));
-    // console.log(randomId);
     var currentQuestion = document.querySelector(".quizQuestion");
     var currentAnswer = document.querySelector (".quizAnswer");
 
-    if (questionsArray.length < 1) {
-        
-        currentQuestion.remove();
-        currentAnswer.remove();
-        
-        endGame();
-        
-    }
+        // If there are no more questions, remove current question and execute endgame function
+        if (questionsArray.length < 1) {
+            
+            currentQuestion.remove();
+            currentAnswer.remove();
+            
+            endGame();
+            
+        }
 
-    if (questionsArray.length > 0) {
+        // If there are more questions, remove current question and spawn new one
+        if (questionsArray.length > 0) {
+            
+            // remove current question from questions array
+            questionsArray.splice(randomId, 1);
         
-        questionsArray.splice(randomId, 1);
-    // console.log(questionsArray);
-    var randomId = randomNumber();
-    currentQuestion.remove();
-    currentAnswer.remove();
-    
-    console.log(randomId);
-    spawnQuestion(randomId);
-    spawnAnswer(randomId);
-        
+            var randomId = randomNumber();
+            currentQuestion.remove();
+            currentAnswer.remove();
+            
+            // Spawn new question section
+            spawnQuestion(randomId);
+            spawnAnswer(randomId);
+            
+        }
     }
-}
     
 
-// endgame creation function
+// Function to execute once game ends (Either timer hits 0 or no more questions to answer)
 
 var endGame = function() {
+    // Remove whole quiz elements
     quizCheckSection.remove();
+
+    // Create endgame or submission layout
     var finishLine = document.createElement("div");
     finishLine.className = "Finish";
 
+    // Header creation
     var allDone = document.createElement("h1");
     allDone.className = "question";
     allDone.innerHTML = "All Done!";
     finishLine.appendChild(allDone);
 
+    // Sub header creation
     var finalScoreStatement = document.createElement("h3");
     finalScoreStatement.className = "scoreStatement";
     finalScoreStatement.innerHTML = "Your final score is " + timer + " .";
     finishLine.appendChild(finalScoreStatement);
 
+    // Input with submission button creation
     var initialSubmission = document.createElement("div");
     initialSubmission.className = "initialSub";
     initialSubmission.innerHTML = "<h3>Enter initials:</h3><input type='text' name='initials' /><button id='save-initial'>Submit</button>";
     finishLine.appendChild(initialSubmission);
     
-
+    // Add to page
     mainQuizSection.appendChild(finishLine);
 
+    // Declare variable on the submit button, and add event listener for click to execute saveSubmission function
     var submissionButton = document.querySelector("#save-initial");
     submissionButton.addEventListener('click', saveSubmission);
 }
 
+
+// Function to execute on submitting initials on endgame screen
 var saveSubmission = function(event) {
 
-    event.preventDefault();
-
+    // Get and declare value from initialSubmission elements
     var initialInput = document.querySelector("input[name='initials']").value;
-    console.log(initialInput);
-    console.log("saved!");
+    
 
-    // check if input values are empty strings
-
+    // Validating input from initial submission element
     if (!initialInput) {
         alert("You need to fill out your initials!");
         return false;
     }
 
+    // Declare data object from player initials and session score
     var inputObj = {
         name: initialInput,
         score: timer
     };
 
+    // Get the data to localStorage and redirect to high scores page
     toStorage(inputObj);
     window.location.href = "./secondary.html";
 }
+
 
 // push into array and save to storage
 
@@ -294,7 +329,7 @@ var finalSave = function() {
 };
 
 
-
+// Listen for click to begin quiz
 startButtonEl.addEventListener('click', deleteStartBtn);
 
     
