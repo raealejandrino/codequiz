@@ -251,6 +251,7 @@ var saveSubmission = function(event) {
     };
 
     toStorage(inputObj);
+    window.location.href = "./secondary.html";
 }
 
 // push into array and save to storage
